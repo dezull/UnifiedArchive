@@ -13,6 +13,7 @@ use wapmorgan\UnifiedArchive\Drivers\Rar;
 use wapmorgan\UnifiedArchive\Drivers\SevenZip;
 use wapmorgan\UnifiedArchive\Drivers\TarByPear;
 use wapmorgan\UnifiedArchive\Drivers\TarByPhar;
+use wapmorgan\UnifiedArchive\Drivers\UnRar;
 use wapmorgan\UnifiedArchive\Drivers\Zip;
 use wapmorgan\UnifiedArchive\Formats\Tar;
 
@@ -62,6 +63,7 @@ class Formats
         TarByPear::class,
         Iso::class,
         Cab::class,
+        UnRar::class,
     ];
 
     /** @var array<string, array<string>> List of all available types with their drivers */
