@@ -85,11 +85,11 @@ class UnRar extends BasicDriver
     {
         if (!static::$unrarPath) {
             foreach (static::$unrarPaths as $path) {
-                if (\file_exists($path))
+                if (\file_exists($path)) {
+                    static::$unrarPath = $path;
                     break;
+                }
             }
-
-            static::$unrarPath = $path;
         }
 
         return static::$unrarPath;
