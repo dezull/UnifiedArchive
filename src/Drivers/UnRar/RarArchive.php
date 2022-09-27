@@ -19,7 +19,11 @@ class RarArchive {
     public function getEntries()
     {
         $parser = $this->getParser();
-        $process = $this->exec(["lt", $this->archiveFileName]);
+        $args = [
+            "lt",
+            \escapeshellarg($this->archiveFileName)
+        ];
+        $process = $this->exec($args);
         foreach ($process as $buffer) {
             $parser->parse($buffer);
             if ($parser->complete) yield $this->parser->entry;
@@ -36,7 +40,12 @@ class RarArchive {
 
     public function getContent($name) {
         $content = "";
-        foreach ($this->exec(["p", $this->archiveFileName, $name]) as $buffer) {
+        $args = [
+            "p",
+            \escapeshellarg($this->archiveFileName),
+            \escapeshellarg($name)
+        ];
+        foreach ($this->exec($args) as $buffer) {
             $content .= $buffer;
         }
 
@@ -45,13 +54,24 @@ class RarArchive {
 
     public function extract() {
         // TODO make overwrite a flag
-        $args = ["x", "-o+", $this->archiveFileName, $this->outputDirectory . DIRECTORY_SEPARATOR];
+        $args = [
+            "x",
+            "-o+",
+            \escapeshellarg($this->archiveFileName),
+            \escapeshellarg($this->outputDirectory) . DIRECTORY_SEPARATOR
+        ];
         foreach ($this->exec($args) as $_);
     }
 
     public function extractEntry($name) {
         // TODO make overwrite a flag
-        $args = ["x", "-o+", $this->archiveFileName, $name, $this->outputDirectory . DIRECTORY_SEPARATOR];
+        $args = [
+            "x",
+            "-o+",
+            \escapeshellarg($this->archiveFileName),
+            \escapeshellarg($name),
+            \escapeshellarg($this->outputDirectory) . DIRECTORY_SEPARATOR
+        ];
         foreach ($this->exec($args) as $_);
     }
 
